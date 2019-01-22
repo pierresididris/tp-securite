@@ -1,3 +1,7 @@
+<?php $title = 'Formulaire de connexion'; ?>
+
+<?php ob_start(); ?>
+
 <form>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -14,3 +18,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('template.php'); ?>
