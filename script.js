@@ -72,7 +72,7 @@ $(document).ready(function(){
 
     $("#btn-connection").click(function(){
         const baseUrl = "http://localhost/tp-security/index.php?"
-
+        
         var email = $("#connection-email").val();
         var pwd = $("#connection-pwd").val();
         if(checkMail(email)){
@@ -86,7 +86,7 @@ $(document).ready(function(){
                 },
                 success: function(data, statut){
                     console.log(data)
-                    if(data.userID != "error"){
+                    if(data.userId != "error"){
                         $("#btn-cnx").hide();
                         $("#btn-dnx").show();
                     }
@@ -96,5 +96,28 @@ $(document).ready(function(){
                 }
             });
         }
+    });
+    
+    $("#btn-dnx").click(function(){
+        const baseUrl = "http://localhost/tp-security/index.php?"
+
+        $.ajax({
+            url: `${baseUrl}deconnect-user`,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+            },
+            success: function(data, statut){
+                console.log(data);
+                if(data.sessionDestroy){
+                    $("#btn-cnx").show();
+                    $("#btn-dnx").hide();
+                    $("#container").html(null);
+                }
+            },
+            error: function(data, statut, error){
+                console.log(data);
+            }
+        });
     });
 });

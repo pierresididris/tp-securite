@@ -17,9 +17,6 @@ class Usercontroller{
 
     public function connectUser($email, $pwd){
         $userId = $this->userDao->connectUser($email, $pwd);
-        if($userId != "error"){
-            session_start();
-        }
         return $userId;
     }
 }

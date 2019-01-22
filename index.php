@@ -7,6 +7,8 @@ use controller\UserController;
 
 $autloader = new Autoloader();
 
+session_start();
+
 $baseUrl = "http://localhost/tp-security/index.php";
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -39,9 +41,22 @@ if($actual_link == $baseUrl . '?connect-user'){
     ){
         $ctrl = new UserController();
         header("HTTP1/1 200");
+        $userId = $ctrl->connectUser($mail, $pwd);
         $result = [
-            "userId" => $ctrl->connectUser($mail, $pwd)
+            "userId" => $userId
         ];
+        if($userId != "error"){
+            $_SESSION["id"] = $userId;
+        }
+        header("HTTP1/1 200");
         echo json_encode($result);
     }
+}
+
+if($actual_link == $baseUrl . '?deconnect-user'){
+    session_destroy();
+    header("HTTP1/1 200");
+    echo json_encode([
+        "sessionDestroy" => true
+    ]);
 }
