@@ -37,6 +37,7 @@ if($actual_link == $baseUrl . '?connect-user'){
         ($mail != "" && $mail != null) &&
         ($pwd != "" && $pwd != null)
     ){
+        session_unset();
         $ctrl = new UserController();
         header("HTTP1/1 200");
         $userId = $ctrl->connectUser($mail, $pwd);

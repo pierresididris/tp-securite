@@ -3,6 +3,7 @@ $(document).ready(function(){
     $("#form-register-error-email").hide();
     $("#form-register-error-pwd").hide();
     $("#form-register-error-profil").hide();
+    $("#success-connection").hide();
     
     $("#submit").click(function(){
         $("#form-register-error-email").hide();
@@ -106,6 +107,12 @@ $(document).ready(function(){
                     if(data.userId != "error"){
                         $("#btn-cnx").hide();
                         $("#btn-dnx").show();
+                        $("#success-connection").show();
+                        $.get('./home.html', function(data){
+                            $("#container").html(null);
+                            $("#container").append(data);
+                        });
+                        $("#btn-iscpt").hide();
                     }
                 },
                 error: function(data, statut, error){
@@ -129,6 +136,7 @@ $(document).ready(function(){
                 if(data.sessionDestroy){
                     $("#btn-cnx").show();
                     $("#btn-dnx").hide();
+                    $("#btn-iscpt").show();
                     $("#container").html(null);
                 }
             },
