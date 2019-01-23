@@ -6,5 +6,14 @@ CREATE TABLE membres (
     pass varchar(255),
     email varchar(255),
     date_inscription date,
-    profil varchar(255)
+    profil_id int,
+    FOREIGN KEY (profil_id) REFERENCES profil(id)
 );
+
+CREATE TABLE profil(
+    id int PRIMARY KEY,
+    label varchar(255),
+    description varchar(255)
+);
+INSERT INTO profil (id, label) VALUES (1, "employée");
+INSERT INTO profil (id, label) VALUES (2, "employeur");

@@ -17,16 +17,13 @@ class UserDao{
         // Hachage du mot de passe
         $pass_hache = password_hash($passwd, PASSWORD_DEFAULT);
         $ret = false;
-        // trigger_error("==============================" . $this->checkUserBdd($email));
-        if($this->checkUserBdd($email) == ""){
-            // Insertion
-            $req = $this->db->prepare('INSERT INTO membres(pass, email, profil, date_inscription) VALUES(:pass, :email, :profil, CURDATE())');
-            $ret= $req->execute(array(
-                'pass' => $pass_hache,
-                'profil' => $profil,
-                'email' => $email
-            ));
-        }
+        // Insertion
+        $req = $this->db->prepare('INSERT INTO membres(pass, email, profil_id, date_inscription) VALUES(:pass, :email, :profil, CURDATE())');
+        $ret= $req->execute(array(
+            'pass' => $pass_hache,
+            'profil' => $profil,
+            'email' => $email
+        ));
         return $ret;
         
     }
@@ -46,17 +43,13 @@ class UserDao{
         return $result;
     }
 
-    public function checkUserBdd($email){
+    public function checkUserDb($email){
       $sql = "SELECT id from membres WHERE email = :email";
       $query = $this->db->prepare($sql);
       $query->execute(array(
           "email" => $email
       ));
-      $result = $query->fetch();
-      $ret;
-      if(array_key_exists('id', $result)){
-          $ret = $result['id'];
-      }
-      return $ret;
+      $result = $query->fetch(PDO::FETCH_ASSOC);
+      return $result;
     }
 }

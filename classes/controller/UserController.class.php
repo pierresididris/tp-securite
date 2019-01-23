@@ -12,7 +12,13 @@ class Usercontroller{
     }
 
     public function add($email, $passwd, $profil){
-        return $this->userDao->add($email, $passwd, $profil);
+        $ret['result'] = false;
+        if(!$this->userDao->checkUserDb($email)){
+            $ret['result'] = $this->userDao->add($email, $passwd, $profil);
+        }else{
+            $ret['memberAlreadyExists'] = true;
+        }
+        return $ret;
     }
 
     public function connectUser($email, $pwd){

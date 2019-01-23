@@ -1,7 +1,14 @@
 $(document).ready(function(){
     $("#btn-dnx").hide();
-
+    $("#form-register-error-email").hide();
+    $("#form-register-error-pwd").hide();
+    $("#form-register-error-profil").hide();
+    
     $("#submit").click(function(){
+        $("#form-register-error-email").hide();
+        $("#form-register-error-pwd").hide();
+        $("#form-register-error-profil").hide();
+
         var email = $("#email").val();
 
         var pwd = $("#password").val();
@@ -23,13 +30,23 @@ $(document).ready(function(){
                 },
                 success: function(data, statut){
                     console.log(data)
+                    if(!data.result){
+                        if(data.memberAlreadyExists){
+                            $("#form-register-error-email").show();
+                        }
+                    }
                 },
                 error: function(data, statut, error){
                     console.log(data);
                 }
             });
         }else {
-            console.log('y a une couille dans leflamby');
+            if(!checkPwd(pwd, pwdCheck)){
+                $("#form-register-error-pwd").show();
+            }
+            if(!checkProfil(profil)){
+                $("#form-register-error-profil").show();
+            }
         }
     });
 

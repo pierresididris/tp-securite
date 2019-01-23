@@ -23,9 +23,7 @@ if($actual_link == $baseUrl . '?add-user'){
     ) {
         $ctrl = new UserController();
         $resAddUser= $ctrl->add($mail, $pwd, $profil);
-        $result = [
-            "result" => $resAddUser,
-        ];
+        $result = $resAddUser;
         header("HTTP1/1 200");
         echo json_encode($result);
     }
