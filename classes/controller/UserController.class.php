@@ -25,4 +25,8 @@ class Usercontroller{
         $userId = $this->userDao->connectUser($email, $pwd);
         return $userId;
     }
+
+    public function getListUser($userId){
+        return $this->userDao->getListUser($userId);
+    }
 }

@@ -59,3 +59,25 @@ if($actual_link == $baseUrl . '?deconnect-user'){
         "sessionDestroy" => true
     ]);
 }
+
+if($actual_link == $baseUrl . '?connected-user'){
+    header("HTTP1/1 200");
+    if(checkConnection()){
+        $ctrl = new UserController();
+        echo json_encode($ctrl->getListUser($_SESSION['id']));
+    }else{  
+        echo json_encode([
+            "userConnected" => false
+        ]);
+    }
+}
+
+function checkConnection(){
+    $ret = false;
+    if(array_key_exists('id', $_SESSION)){
+        if($_SESSION['id'] != null && $_SESSION['id'] != ""){
+            $ret = true;
+        }
+    }
+    return $ret;
+}

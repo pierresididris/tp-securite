@@ -52,4 +52,26 @@ class UserDao{
       $result = $query->fetch(PDO::FETCH_ASSOC);
       return $result;
     }
+
+    public function getListUser($userId){
+        $sql = "SELECT profil_id FROM membres WHERE id = :userId";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            "userId" => $userId
+        ));
+        $profilId = $query->fetch()["profil_id"];
+        $result;
+        if($profilId != ""){
+            $sql = "SELECT id, email FROM membres WHERE profil_id = :profilId";
+            $query = $this->db->prepare($sql);
+            $query->execute(array(
+                "profilId" => $profilId
+            ));
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            trigger_error(__CLASS__.'->'.__METHOD__.'no profil id found for user '.$userId);
+        }
+
+        return $result;
+    }
 }
