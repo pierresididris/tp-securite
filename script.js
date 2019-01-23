@@ -9,7 +9,7 @@ $(document).ready(function(){
         
         var profil = $("#profil").val();
 
-        const baseUrl = "http://localhost/tp-security/index.php?"
+        const baseUrl = "http://localhost/dev/a3/tp-securite/index.php?"
 
         if(checkMail(email) && checkPwd(pwd, pwdCheck) && checkProfil(profil)){
             $.ajax({
@@ -71,7 +71,7 @@ $(document).ready(function(){
     });
 
     $("#btn-connection").click(function(){
-        const baseUrl = "http://localhost/tp-security/index.php?"
+        const baseUrl = "http://localhost/dev/a3/tp-securite/index.php?"
         
         var email = $("#connection-email").val();
         var pwd = $("#connection-pwd").val();
@@ -99,7 +99,7 @@ $(document).ready(function(){
     });
     
     $("#btn-dnx").click(function(){
-        const baseUrl = "http://localhost/tp-security/index.php?"
+        const baseUrl = "http://localhost/dev/a3/tp-securite/index.php?"
 
         $.ajax({
             url: `${baseUrl}deconnect-user`,

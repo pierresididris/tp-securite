@@ -1,32 +1,14 @@
 "<br />
-<font size='1'><table class='xdebug-error xe-warning' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Warning: array_key_exists() expects parameter 2 to be array, boolean given in C:\wamp64\www\tp-security\classes\model\UserDao.class.php on line <i>55</i></th></tr>
+<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in C:\wamp64\www\dev\a3\tp-securite\classes\model\Db.class.php on line <i>18</i></th></tr>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in C:\wamp64\www\dev\a3\tp-securite\classes\model\Db.class.php on line <i>18</i></th></tr>
 <tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
 <tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0011</td><td bgcolor='#eeeeec' align='right'>408648</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0125</td><td bgcolor='#eeeeec' align='right'>429944</td><td bgcolor='#eeeeec'>controller\Usercontroller->add(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>25</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.0125</td><td bgcolor='#eeeeec' align='right'>429944</td><td bgcolor='#eeeeec'>model\UserDao->add(  )</td><td title='C:\wamp64\www\tp-security\classes\controller\UserController.class.php' bgcolor='#eeeeec'>...\UserController.class.php<b>:</b>15</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.0979</td><td bgcolor='#eeeeec' align='right'>430040</td><td bgcolor='#eeeeec'>model\UserDao->checkUserBdd(  )</td><td title='C:\wamp64\www\tp-security\classes\model\UserDao.class.php' bgcolor='#eeeeec'>...\UserDao.class.php<b>:</b>20</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>5</td><td bgcolor='#eeeeec' align='center'>0.0994</td><td bgcolor='#eeeeec' align='right'>449944</td><td bgcolor='#eeeeec'><a href='http://www.php.net/function.array-key-exists' target='_new'>array_key_exists</a>
-(  )</td><td title='C:\wamp64\www\tp-security\classes\model\UserDao.class.php' bgcolor='#eeeeec'>...\UserDao.class.php<b>:</b>55</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0071</td><td bgcolor='#eeeeec' align='right'>407888</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\wamp64\www\dev\a3\tp-securite\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0140</td><td bgcolor='#eeeeec' align='right'>411720</td><td bgcolor='#eeeeec'>controller\Usercontroller->__construct(  )</td><td title='C:\wamp64\www\dev\a3\tp-securite\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>24</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.0150</td><td bgcolor='#eeeeec' align='right'>412528</td><td bgcolor='#eeeeec'>model\UserDao->__construct(  )</td><td title='C:\wamp64\www\dev\a3\tp-securite\classes\controller\UserController.class.php' bgcolor='#eeeeec'>...\UserController.class.php<b>:</b>11</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.0166</td><td bgcolor='#eeeeec' align='right'>413656</td><td bgcolor='#eeeeec'>model\Db->__construct(  )</td><td title='C:\wamp64\www\dev\a3\tp-securite\classes\model\UserDao.class.php' bgcolor='#eeeeec'>...\UserDao.class.php<b>:</b>12</td></tr>
+<tr><td bgcolor='#eeeeec' align='center'>5</td><td bgcolor='#eeeeec' align='center'>0.0166</td><td bgcolor='#eeeeec' align='right'>413952</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDO.construct' target='_new'>__construct</a>
+(  )</td><td title='C:\wamp64\www\dev\a3\tp-securite\classes\model\Db.class.php' bgcolor='#eeeeec'>...\Db.class.php<b>:</b>18</td></tr>
 </table></font>
-<br />
-<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: Undefined variable: ret in C:\wamp64\www\tp-security\classes\model\UserDao.class.php on line <i>58</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0011</td><td bgcolor='#eeeeec' align='right'>408648</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0125</td><td bgcolor='#eeeeec' align='right'>429944</td><td bgcolor='#eeeeec'>controller\Usercontroller->add(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>25</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.0125</td><td bgcolor='#eeeeec' align='right'>429944</td><td bgcolor='#eeeeec'>model\UserDao->add(  )</td><td title='C:\wamp64\www\tp-security\classes\controller\UserController.class.php' bgcolor='#eeeeec'>...\UserController.class.php<b>:</b>15</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.0979</td><td bgcolor='#eeeeec' align='right'>430040</td><td bgcolor='#eeeeec'>model\UserDao->checkUserBdd(  )</td><td title='C:\wamp64\www\tp-security\classes\model\UserDao.class.php' bgcolor='#eeeeec'>...\UserDao.class.php<b>:</b>20</td></tr>
-</table></font>
-<br />
-<font size='1'><table class='xdebug-error xe-warning' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Warning: Cannot modify header information - headers already sent by (output started at C:\wamp64\www\tp-security\classes\model\UserDao.class.php:58) in C:\wamp64\www\tp-security\index.php on line <i>29</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0011</td><td bgcolor='#eeeeec' align='right'>408648</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.1048</td><td bgcolor='#eeeeec' align='right'>431048</td><td bgcolor='#eeeeec'><a href='http://www.php.net/function.header' target='_new'>header</a>
-(  )</td><td title='C:\wamp64\www\tp-security\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>29</td></tr>
-</table></font>
-{"result":false}"
+"

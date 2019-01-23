@@ -9,7 +9,7 @@ $autloader = new Autoloader();
 
 session_start();
 
-$baseUrl = "http://localhost/tp-security/index.php";
+$baseUrl = "http://localhost/dev/a3/tp-securite/index.php";
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 if($actual_link == $baseUrl . '?add-user'){
