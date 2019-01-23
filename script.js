@@ -4,6 +4,7 @@ $(document).ready(function(){
     $("#form-register-error-pwd").hide();
     $("#form-register-error-profil").hide();
     $("#success-connection").hide();
+    $("#success-inscription").hide();
     
     $("#submit").click(function(){
         $("#form-register-error-email").hide();
@@ -35,6 +36,11 @@ $(document).ready(function(){
                         if(data.memberAlreadyExists){
                             $("#form-register-error-email").show();
                         }
+                    }else{
+                        $.get("./form-connection.html", function(data){
+                            $("#container").html(null);
+                            $("#container").html(data);
+                        });
                     }
                 },
                 error: function(data, statut, error){
