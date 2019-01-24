@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -23,10 +24,9 @@ export class AppComponent {
 
   disconnectUser(): void {
     console.log("disconnectUser");
-    this.userService.deconnectUSer().subscribe((response) => {
-      if(response.sessionDestroy){
-        this.router.navigate(['/connection']);
-      }
+    this.userService.deconnectUser().subscribe((response) => {
+      this.userService.connectedUser = new User();
+      this.router.navigate(['/connection']);
     });
   }
 }

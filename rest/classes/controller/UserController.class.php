@@ -24,6 +24,7 @@ class Usercontroller{
     public function connectUser($email, $pwd){
         $userId = $this->userDao->connectUser($email, $pwd);
         if($userId != "error"){
+            \setcookie('currentUser', $userId);
             $this->userDao->openSession($userId);
         }
         return $userId;
@@ -38,10 +39,10 @@ class Usercontroller{
         return $ret;
     }
 
-    public function disconnectUser($email, $pwd){
-        $userId = $this->userDao->getUserId($email, $pwd);
-        $ret = 'error';
-        if($userId != 'error'){
+    public function disconnectUser($userId){
+        $user = $this->userDao->getUser($userId);
+        $ret = false;
+        if(\array_key_exists('email', $user)){
             $ret = $this->userDao->closeSession($userId);
         }
         return $ret;

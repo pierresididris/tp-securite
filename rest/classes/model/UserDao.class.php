@@ -132,4 +132,10 @@ class UserDao{
         }
         return $userId;
     }
+
+    public function getUser($userId){
+        $sql = "SELECT email FROM membres WHERE id = $userId";
+        $query = $this->db->query($sql);
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 }
