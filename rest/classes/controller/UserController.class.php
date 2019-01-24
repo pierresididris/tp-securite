@@ -23,8 +23,30 @@ class Usercontroller{
 
     public function connectUser($email, $pwd){
         $userId = $this->userDao->connectUser($email, $pwd);
+        if($userId != "error"){
+            $this->userDao->openSession($userId);
+        }
         return $userId;
     }
+
+    public function isUserConnected($userId){
+        $ret = false;
+        $session = $this->userDao->getSession($userId);
+        if($session['open_close'] == 'o'){
+            $ret = true;
+        }
+        return $ret;
+    }
+
+    public function disconnectUser($email, $pwd){
+        $userId = $this->userDao->getUserId($email, $pwd);
+        $ret = 'error';
+        if($userId != 'error'){
+            $ret = $this->userDao->closeSession($userId);
+        }
+        return $ret;
+    }
+
 
     public function getListUser($userId){
         return $this->userDao->getListUser($userId);

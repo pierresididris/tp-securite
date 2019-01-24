@@ -58,7 +58,11 @@ export class UserService {
 
   deconnectUSer(): Observable<any>{
     const url = `${baseUrl}deconnect-user`;
-    return this.http.get(url, httpOptions).pipe(
+    let parameters = {
+      "email": this.connectedUser.email,
+      "pwd": this.connectedUser.password,
+    }
+    return this.http.post(url, parameters, httpOptions).pipe(
       tap((noParameter) => console.log(`Disconnect User`)),
       map((response) => {
         if(response.hasOwnProperty("sessionDestroy")){
@@ -70,6 +74,24 @@ export class UserService {
       }),
       catchError(this.handleError('disconnect user'))
     );
+  }
+
+  getUserList(): Observable<any>{
+    if(this.connectedUser.id != null){
+      const url = `${baseUrl}get-user-list`;
+      let parameters = {
+        'id': this.connectedUser.id
+      }
+      return this.http.post(url, parameters, httpOptions).pipe(
+        tap((noParameter) => console.log(`Get user list`)),
+        map((userList) => {
+          console.log('userList', userList);
+        }),
+        catchError(this.handleError('get users'))
+      );
+    }else{
+      console.log("no user connected");
+    }
   }
 
     /**

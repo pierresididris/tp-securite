@@ -42,26 +42,30 @@ if($actual_link == $baseUrl . '?connect-user'){
         ($mail != "" && $mail != null) &&
         ($pwd != "" && $pwd != null)
     ){
-        session_unset();
+        //session_unset();
         $ctrl = new UserController();
-        $userId = $ctrl->connectUser($mail, $pwd);
-        $result = [
-            "userId" => $userId
-        ];
-        if($userId != "error"){
-            $_SESSION["id"] = $userId;
-        }
         // header("HTTP1/1 200");
-        echo json_encode($result);
+        echo json_encode($ctrl->connectUser($mail, $pwd));
     }
 }
 
 if($actual_link == $baseUrl . '?deconnect-user'){
-    session_destroy();
-    // header("HTTP1/1 200");
-    echo json_encode([
-        "sessionDestroy" => true
-    ]);
+    // session_destroy();
+    // // header("HTTP1/1 200");
+    // echo json_encode([
+    //     "sessionDestroy" => true
+    // ]);
+    $email = $_POST["email"];
+    $pwd = $_POST["pwd"];
+    $ctrl = new UserController();
+    if(
+        $email != "" && $pwd != null &&
+        $pwd != "" && $pwd != null
+    ){
+        echo json_encode([
+            "sessionDestroy" => $ctrl->disconnectUser($email, $pwd)
+        ]);
+    }
 }
 
 if($actual_link == $baseUrl . '?connected-user'){
@@ -76,12 +80,39 @@ if($actual_link == $baseUrl . '?connected-user'){
     }
 }
 
+if($actual_link == $baseUrl . '?get-user-list'){
+    $userId = $_POST['id'];
+    if($userId != "" && $userId != null){
+        if(checkSession($userId)){
+            $ctrl = new UserController();
+            echo json_encode($ctrl->getListUser($_POST['id']));
+        }else{
+            echo json_encode([
+                "userConnected" => false
+            ]);
+        }
+    }else{
+        echo json_encode([
+            "error" => 'aucun idée trouvée'
+        ]);
+    }
+}
+
 function checkConnection(){
     $ret = false;
     if(array_key_exists('id', $_SESSION)){
         if($_SESSION['id'] != null && $_SESSION['id'] != ""){
             $ret = true;
         }
+    }
+    return $ret;
+}
+
+function checkSession($userId){
+    $ret = false;
+    $ctrl = new UserController();
+    if($ctrl->isUserConnected($userId)){
+        $ret = true;
     }
     return $ret;
 }

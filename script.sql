@@ -17,3 +17,12 @@ CREATE TABLE profil(
 );
 INSERT INTO profil (id, label) VALUES (1, "employée");
 INSERT INTO profil (id, label) VALUES (2, "employeur");
+
+create table session_user (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    id_membre int,
+    open_close varchar(1),
+    token varchar(255),
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_membre) REFERENCES membres(id)
+)

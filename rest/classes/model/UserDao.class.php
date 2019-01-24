@@ -74,4 +74,62 @@ class UserDao{
 
         return $result;
     }
+
+    function openSession($userId){
+        $sql = "INSERT INTO session_user (id_membre, open_close) VALUES (:idMember, :op)";
+        $query = $this->db->prepare($sql);
+        return $query->execute(array(
+            'op' => "o",
+            'idMember' => $userId
+        ));
+    }
+
+    function getSession($userId){
+        $sql = "SELECT open_close
+                FROM session_user 
+                WHERE id_membre = $userId 
+                ORDER BY creation_time DESC
+                LIMIT 1";
+        $query = $this->db->query($sql);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function closeSession($userId){
+        $sql = "SELECT open_close
+                FROM session_user 
+                WHERE id_membre = :userId
+                ORDER BY creation_time DESC
+                LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            'userId' => $userId
+        ));
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if($result['open_close'] == 'o'){
+            $sql = "INSERT INTO session_user (id_membre, open_close) VALUES (:idMembre, :cl)";
+            $query = $this->db->prepare($sql);
+            return $query->execute(array(
+                'idMembre' => $userId,
+                'cl' => 'c'
+            ));
+        }
+    }
+
+    public function getUserId($email, $pwd){
+        $sql = "SELECT id, pass FROM membres WHERE email = :email";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            "email" => $email
+        ));
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $encryptedPwd = $result['pass'];
+        $userId = 'error';
+        if($encryptedPwd != "" && $encryptedPwd != null){
+            if(password_verify($pwd, $encryptedPwd)){
+                $userId = $result['id'];
+            }
+        }
+        return $userId;
+    }
 }
