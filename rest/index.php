@@ -62,62 +62,68 @@ if($actual_link == $baseUrl . '?deconnect-user'){
 }
 
 if($actual_link == $baseUrl . '?get-user-list'){
-    if(array_key_exists('id', $_POST)){
-        $userId = $_POST['id'];
-        if($userId != "" && $userId != null){
-            if(checkSession($userId)){
-                $ctrl = new UserController();
-                echo json_encode($ctrl->getListUser($_POST['id']));
-            }else{
-                echo json_encode([
-                    "userConnected" => false
-                ]);
-            }
-        }else{
-            echo json_encode([
-                "error" => 'aucun idée trouvée'
-            ]);
-        }
-    }else {
+    if(isUserConnected()){
+        $ctrl = new UserController();
+        echo json_encode($ctrl->getListUser($_COOKIE['currentUser']));
+    }else{
         echo json_encode([
-            "error" => 'no id provided'
+            "userConnected" => false
         ]);
     }
 }
 
 /**
- * Check if the session is still open for the given id
+ * Check if the session is still open for the current cookie
  * Session is marked at 'o' in db if it's open
  * return true or false if the session is open
  */
 if($actual_link == $baseUrl . '?is-session-open'){
-    $userId = $_POST['id'];
     $ctrl = new UserController();
-    echo json_encode($ctrl->isUserConnected($userId));
-}
-
-/**
- * If a cookie is recorded for currentUser, this means a user is connected
- * Then we return the id of this user
- */
-if($actual_link == $baseUrl . '?is-user-connected'){
     if(isUserConnected()){
-        echo json_encode($_COOKIE['currentUser']);
+        echo json_encode(true);
     }else{
         echo json_encode([
-            "error" => 'no cookie found'
+            'error' => 'no user connected'
         ]);
     }
 }
 
-
-function checkConnection(){
-    $ret = false;
-    if(array_key_exists('id', $_SESSION)){
-        if($_SESSION['id'] != null && $_SESSION['id'] != ""){
-            $ret = true;
+if($actual_link == $baseUrl . '?get-user-connected'){
+    if(isUserConnected()){
+        $ctrl = new UserController();
+        $user = $ctrl->getUser($_COOKIE['currentUser']);
+        echo json_encode($user);
+    }else{
+        echo json_encode([
+            'error' => 'no user connected'
+            ]);
         }
     }
+    
+    
+    function checkConnection(){
+        $ret = false;
+        if(array_key_exists('id', $_SESSION)){
+            if($_SESSION['id'] != null && $_SESSION['id'] != ""){
+                $ret = true;
+            }
+        }
+        return $ret;
+    }
+    
+    /**
+     * Check if a cookie is recorded for currentUser
+     */
+    function isUserConnected(){
+    $ret = false;
+    if(array_key_exists('currentUser', $_COOKIE)){
+        if($_COOKIE['currentUser'] != null && $_COOKIE['currentUser'] != ''){
+            if(checkSession($_COOKIE['currentUser'])){
+                $ret = true;
+            }
+        }
+    }
+    // trigger_error('==================================================' . $ret);
     return $ret;
 }
 
@@ -126,19 +132,6 @@ function checkSession($userId){
     $ctrl = new UserController();
     if($ctrl->isUserConnected($userId)){
         $ret = true;
-    }
-    return $ret;
-}
-
-/**
- * Check if a cookie is recorded for currentUser
- */
-function isUserConnected(){
-    $ret = false;
-    if(array_key_exists('currentUser', $_COOKIE)){
-        if($_COOKIE['currentUser'] != null && $_COOKIE['currentUser'] != ''){
-            $ret = true;
-        }
     }
     return $ret;
 }

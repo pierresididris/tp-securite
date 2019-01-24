@@ -52,4 +52,8 @@ class Usercontroller{
     public function getListUser($userId){
         return $this->userDao->getListUser($userId);
     }
+
+    public function getUser($userId){
+        return $this->userDao->getUser($userId);
+    }
 }

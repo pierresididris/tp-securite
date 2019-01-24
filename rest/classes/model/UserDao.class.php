@@ -134,7 +134,7 @@ class UserDao{
     }
 
     public function getUser($userId){
-        $sql = "SELECT email FROM membres WHERE id = $userId";
+        $sql = "SELECT id, email, profil_id FROM membres WHERE id = $userId";
         $query = $this->db->query($sql);
         return $query->fetch(PDO::FETCH_ASSOC);
     }

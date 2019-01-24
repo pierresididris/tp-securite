@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormConnectionComponent } from './form-connection/form-connection.component';
 import { HomeUserComponent } from './home-user/home-user.component';
+import { ProfilUserComponent } from './profil-user/profil-user.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { HomeUserComponent } from './home-user/home-user.component';
     AppComponent,
     FormRegisterComponent,
     FormConnectionComponent,
-    HomeUserComponent
+    HomeUserComponent,
+    ProfilUserComponent
   ],
   imports: [
     BrowserModule,

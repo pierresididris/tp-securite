@@ -70,12 +70,16 @@ export class UserService {
 
   async getUserList(): Promise<any> {
     const url = `${baseUrl}get-user-list`;
-    var isConnected = await this.isSessionOpen();
-    let parameters = {
-      'id': this.connectedUser.id
-    }
+    //var isConnected = await this.isSessionOpen();
     var ret;
-    if(isConnected){
+    // if(isConnected){
+      var user = await this.setConnectedUser();
+      // this.connectedUser.id = user.id;
+      // this.connectedUser.email = user.email;
+      // this.connectedUser.profilId = user.profil_id;
+      let parameters = {
+        'id': this.connectedUser.id
+      }
       ret = this.http.post(url, parameters, httpOptions).pipe(
         tap((noParameter) => console.log(`Get user list`)),
         map((userList) => {
@@ -84,9 +88,9 @@ export class UserService {
         }),
         catchError(this.handleError('get users'))
       ).toPromise();
-    }else{
-      console.log("need to connect");
-    }
+    // }else{
+      // console.log("need to connect");
+    // }
     return ret;
   }
 
@@ -96,31 +100,28 @@ export class UserService {
    */
   async isSessionOpen(): Promise<any> {
     const url = `${baseUrl}is-session-open`;
-    let idConnected = await this.idUserConnected();
-    if(idConnected.hasOwnProperty('error')){
-      console.log(idConnected);
-    }else{
-      console.log('id user opened session', idConnected);
-      this.connectedUser.id = idConnected
-    }
-    let parameters = {
-      'id': this.connectedUser.id
-    }
-    return this.http.post(url, parameters, httpOptions).pipe(
+    return this.http.get(url, httpOptions).pipe(
       tap((user) => console.log(`ìs session open`)),
       catchError(this.handleError('is session open'))
     ).toPromise();
   }
 
   /**
-   * Check if there is a cookie 'currentUser'
+   * 
+   * @param get connectedUser depending of the user connected on api
+   * @param result void
+   * ====================== TODO : set this.connectedUser properties in this method ==================================
    */
-  async idUserConnected(): Promise<any> {
-    const url = `${baseUrl}is-user-connected`;
+  async setConnectedUser(): Promise<any> {
+    const url = `${baseUrl}get-user-connected`;
     return this.http.get(url, httpOptions).pipe(
-      tap((user) => console.log('is user connected')),
-      catchError(this.handleError('is user connected'))
-    ).toPromise();
+      (tap((user) => console.log('get connected user'))),
+      catchError(this.handleError('get connected user'))
+    ).toPromise().then((user: any) => {
+      this.connectedUser.id = user.id;
+      this.connectedUser.email = user.email;
+      this.connectedUser.profilId = user.profil_id;
+    });
   }
 
     /**

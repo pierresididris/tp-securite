@@ -32,6 +32,7 @@ export class FormConnectionComponent implements OnInit {
         if(response.userId != "error"){
           this.userService.connectedUser = this.user;
           this.userService.connectedUser.id = response;
+          console.log('formConnectionComponent -> connect', response);
           this.router.navigate(['/home-user'])
         }else{
           this.noUser = true;
