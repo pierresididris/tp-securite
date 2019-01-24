@@ -1,0 +1,22 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-2" *ngIf="userService.connectedUser.id == null">
+      <a routerLink="/register" class="btn btn-primary">Inscrption</a>
+    </div>
+    <div class="col-2" *ngIf="userService.connectedUser.id == null">
+      <a routerLink="/connection" class="btn btn-primary">Connection</a>
+    </div>
+    <div class="col-2 offset-10" *ngIf="userService.connectedUser.id">
+      <a class="btn btn-primary" (click)="disconnectUser()">Déconnexion</a>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
