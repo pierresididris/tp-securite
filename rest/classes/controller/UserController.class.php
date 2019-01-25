@@ -58,4 +58,26 @@ class Usercontroller{
     public function getUser($userId){
         return $this->userDao->getUser($userId);
     }
+
+    public function resetPasswordPre($userEmail){
+        if($this->userDao->isUserExists($userEmail)){
+            $this->userDao->setInactif($userEmail);
+            $this->userDao->add($userEmail, 'test', $this->userDao->getProfilId($userEmail));
+            $mailer = new \Mailer();
+            $mailer->setUserEmail($userEmail);
+            $mailResponse = $mailer->send();
+        }else{
+            trigger_error('no user found for email : '.$userEmail);
+        }
+    }
+
+    public function resetPasswordPost($userEmail, $newPwd){
+        $ret = 'error';
+        if($newPwd != null && $newPwd != "" && $this->userDao->isUserExists($userEmail)){
+            $this->userDao->setInactif($userEmail);
+            $this->userDao->add($userEmail, 'test', $this->userDao->getProfilId($userEmail));
+            $ret = 'passwordReseted';
+        }
+        return $ret;
+    }
 }

@@ -47,7 +47,7 @@ export class FormConnectionComponent implements OnInit {
   }
 
   forgetPwd(): void {
-    this.userService.forgetPwd('test').subscribe((response) => {
+    this.userService.forgetPwd('mathieuferron06@gmail.com').subscribe((response) => {
       this.mailSent = true;
     });
   }

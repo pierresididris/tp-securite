@@ -29,6 +29,7 @@ export class FormRegisterComponent implements OnInit {
   }
 
   add(): void{
+    console.log("========================")
     this.userAlreadyExist = false;
     this.passwordNotEquals = false;
 

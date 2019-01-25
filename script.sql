@@ -7,6 +7,7 @@ CREATE TABLE membres (
     email varchar(255),
     date_inscription date,
     profil_id int,
+    rec_st varchar(1),
     FOREIGN KEY (profil_id) REFERENCES profil(id)
 );
 

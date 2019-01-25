@@ -138,4 +138,26 @@ class UserDao{
         $query = $this->db->query($sql);
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function isUserExists($email){
+        $sql = "SELECT id FROM membres WHERE email = 'mathieuferron06@gmail.com'";
+        $query = $this->db->query($sql);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $ret = false;
+        if(array_key_exists('id', $result)){
+            $ret = true;
+        }
+        return $ret;
+    }
+
+    public function setInactif($userEmail){
+        $sql = "UPDATE membres SET rec_st='d' WHERE email='$userEmail'";
+        $query = $this->db->query($sql);
+    }
+
+    public function getProfilId($userEmail){
+        $sql = "SELECT profil_id FROM membres WHERE email='$userEmail'";
+        $query = $this->db->query($sql);
+        return $query->fetch(PDO::FETCH_ASSOC)['profil_id'];
+    }
 }

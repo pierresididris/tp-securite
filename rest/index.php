@@ -103,11 +103,27 @@ if($actual_link == $baseUrl . '?get-user-connected'){
 if($actual_link == $baseUrl . '?forget-pwd'){
     $email = $_POST["email"];
     if($email != '' && $email != null){
-        $mailer = new Mailer();
-        $mailResponse = $mailer->send();
+
+        $ctrl = new UserController();
+        $ctrl->resetPasswordPre($email);
         echo json_encode(true);
     }else{
         echo json_encode('no email provided');
+    }
+}
+
+/**
+ * Reset password link
+ */
+// if(preg_match("/^$actual_link/reset\?id=.*\?mail=(.*@.*\.\w*)$/")){
+
+// }
+if($actual_link == $baseUrl . '?reset-pwd'){
+    $decoded = JWT::decode($_POST['id'], 'tpsecuritepassphrase', array('HS256'));
+    if($decoded == $_POST['email']){
+        $ctrl = new UserController();
+        $ctrl->resetPasswordPost($_POST['email'], $_POST['newpwd']);
+        header('Location:localhost:4200/connection');
     }
 }
     
