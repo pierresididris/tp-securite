@@ -1,3 +1,4 @@
 node_modules/
 yarn.lock
 classes/model/Db.class.php
+classes/Mailer.class.php

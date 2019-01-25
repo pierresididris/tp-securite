@@ -70,27 +70,19 @@ export class UserService {
 
   async getUserList(): Promise<any> {
     const url = `${baseUrl}get-user-list`;
-    //var isConnected = await this.isSessionOpen();
     var ret;
-    // if(isConnected){
-      var user = await this.setConnectedUser();
-      // this.connectedUser.id = user.id;
-      // this.connectedUser.email = user.email;
-      // this.connectedUser.profilId = user.profil_id;
-      let parameters = {
-        'id': this.connectedUser.id
-      }
-      ret = this.http.post(url, parameters, httpOptions).pipe(
-        tap((noParameter) => console.log(`Get user list`)),
-        map((userList) => {
-          console.log(userList)
-          return userList;
-        }),
-        catchError(this.handleError('get users'))
-      ).toPromise();
-    // }else{
-      // console.log("need to connect");
-    // }
+    var user = await this.setConnectedUser();
+    let parameters = {
+      'id': this.connectedUser.id
+    }
+    ret = this.http.post(url, parameters, httpOptions).pipe(
+      tap((noParameter) => console.log(`Get user list`)),
+      map((userList) => {
+        console.log(userList)
+        return userList;
+      }),
+      catchError(this.handleError('get users'))
+    ).toPromise();
     return ret;
   }
 
@@ -110,7 +102,6 @@ export class UserService {
    * 
    * @param get connectedUser depending of the user connected on api
    * @param result void
-   * ====================== TODO : set this.connectedUser properties in this method ==================================
    */
   async setConnectedUser(): Promise<any> {
     const url = `${baseUrl}get-user-connected`;
@@ -118,10 +109,25 @@ export class UserService {
       (tap((user) => console.log('get connected user'))),
       catchError(this.handleError('get connected user'))
     ).toPromise().then((user: any) => {
-      this.connectedUser.id = user.id;
-      this.connectedUser.email = user.email;
-      this.connectedUser.profilId = user.profil_id;
+      if(user != undefined && user.hasOwnProperty('id')){
+        this.connectedUser.id = user.id;
+        this.connectedUser.email = user.email;
+        this.connectedUser.profilId = user.profil_id;
+      }else{
+        console.log('invalid user : ', user);
+      }
     });
+  }
+
+  forgetPwd(email: string): Observable<any>{
+    const url = `${baseUrl}forget-pwd`;
+    let parameters = {
+      'email': email
+    }
+    return this.http.post(url, parameters, httpOptions).pipe(
+      tap((response) => console.log('forget pwd', response)),
+      catchError(this.handleError('forget pwd'))
+    );
   }
 
     /**

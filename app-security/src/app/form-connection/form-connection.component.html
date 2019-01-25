@@ -26,3 +26,27 @@
         <button id="btn-connection" (click)="connect()" class="btn btn-success">Valider</button>
     </div>
 </div>
+
+<div class="row mt-5" *ngIf="noUser">
+    <div class="col-12">
+        Mot de passe oublié ?
+    </div>
+    <div class="col-12 mt-2">
+        Indiquer votre adresse mail pour récupérer votre mot de passe
+    </div>
+    <div class="mt-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <input type="text" [(ngModel)]="recuperationMail" placeholder="Email" class="form-control">
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-secondary" (click)="forgetPwd()">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-2" style="color: green" *ngIf="mailSent">;
+        Email envoyé. Veuillez consulter votre boîte mail
+    </div>
+</div>

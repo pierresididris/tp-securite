@@ -4,9 +4,12 @@ header("Access-Control-Allow-Headers: Content-Type, origin");
 header('Access-Control-Allow-Credentials: true');
 
 include __DIR__ . '/classes/autoloader.php';
+include __DIR__ . '/vendor/autoload.php';
 
 use model\Db;
 use controller\UserController;
+use \Firebase\JWT\JWT;
+
 
 $autloader = new Autoloader();
 
@@ -40,31 +43,28 @@ if($actual_link == $baseUrl . '?connect-user'){
         ($mail != "" && $mail != null) &&
         ($pwd != "" && $pwd != null)
     ){
-        //session_unset();
         $ctrl = new UserController();
         // header("HTTP1/1 200");
-        // echo json_encode($ctrl->connectUser($mail, $pwd));
         echo json_encode($ctrl->connectUser($mail, $pwd));
     }
 }
 
 if($actual_link == $baseUrl . '?deconnect-user'){
-    $userId = $_POST["id"];
-    $ctrl = new UserController();
-    if(
-        $userId != "" && $userId != null 
-    ){
+    if(isUserConnected()){
+        $ctrl = new UserController();
         setcookie('currentUser', '');
         echo json_encode([
-            "sessionDestroy" => $ctrl->disconnectUser($userId)
+            "sessionDestroy" => $ctrl->disconnectUser(getIdConnectedUser())
         ]);
+    }else{
+        echo json_encode('no user connected');
     }
 }
 
 if($actual_link == $baseUrl . '?get-user-list'){
     if(isUserConnected()){
         $ctrl = new UserController();
-        echo json_encode($ctrl->getListUser($_COOKIE['currentUser']));
+        echo json_encode($ctrl->getListUser(getIdConnectedUser()));
     }else{
         echo json_encode([
             "userConnected" => false
@@ -91,39 +91,50 @@ if($actual_link == $baseUrl . '?is-session-open'){
 if($actual_link == $baseUrl . '?get-user-connected'){
     if(isUserConnected()){
         $ctrl = new UserController();
-        $user = $ctrl->getUser($_COOKIE['currentUser']);
+        $user = $ctrl->getUser(getIdConnectedUser());
         echo json_encode($user);
     }else{
         echo json_encode([
             'error' => 'no user connected'
-            ]);
+        ]);
+    }
+}
+
+if($actual_link == $baseUrl . '?forget-pwd'){
+    $email = $_POST["email"];
+    if($email != '' && $email != null){
+        $mailer = new Mailer();
+        $mailResponse = $mailer->send();
+        echo json_encode(true);
+    }else{
+        echo json_encode('no email provided');
+    }
+}
+    
+    
+function checkConnection(){
+    $ret = false;
+    if(array_key_exists('id', $_SESSION)){
+        if($_SESSION['id'] != null && $_SESSION['id'] != ""){
+            $ret = true;
         }
     }
-    
-    
-    function checkConnection(){
-        $ret = false;
-        if(array_key_exists('id', $_SESSION)){
-            if($_SESSION['id'] != null && $_SESSION['id'] != ""){
-                $ret = true;
-            }
-        }
-        return $ret;
-    }
-    
-    /**
-     * Check if a cookie is recorded for currentUser
-     */
-    function isUserConnected(){
+    return $ret;
+}
+
+/**
+ * Check if a cookie is recorded for currentUser
+ */
+function isUserConnected(){
     $ret = false;
     if(array_key_exists('currentUser', $_COOKIE)){
         if($_COOKIE['currentUser'] != null && $_COOKIE['currentUser'] != ''){
-            if(checkSession($_COOKIE['currentUser'])){
+            // if(checkSession($_COOKIE['currentUser'])){
+            if(checkSession(getIdConnectedUser())){
                 $ret = true;
             }
         }
     }
-    // trigger_error('==================================================' . $ret);
     return $ret;
 }
 
@@ -134,4 +145,8 @@ function checkSession($userId){
         $ret = true;
     }
     return $ret;
+}
+
+function getIdConnectedUser(){
+    return JWT::decode($_COOKIE['currentUser'], 'tpsecuritepassphrase', array('HS256'));
 }

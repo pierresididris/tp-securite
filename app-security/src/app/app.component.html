@@ -5,18 +5,21 @@
   </h1>
 </div>
 <div class="container">
-  <div class="row">
+  <div class="row mb-5">
     <div class="col-2" *ngIf="userService.connectedUser.id == null">
       <a routerLink="/register" class="btn btn-primary">Inscrption</a>
     </div>
     <div class="col-2" *ngIf="userService.connectedUser.id == null">
       <a routerLink="/connection" class="btn btn-primary">Connection</a>
     </div>
-    <div class="col-2 offset-6" *ngIf="userService.connectedUser.id">
-      <a class="btn btn-primary" routerLink="/profil-user">Profil</a>
-    </div>
     <div class="col-2" *ngIf="userService.connectedUser.id">
-      <a class="btn btn-primary" (click)="disconnectUser()">Déconnexion</a>
+      <a routerLink="/home-user" class="btn btn-primary">Home</a>
+    </div>
+    <div class="col-2 offset-6" *ngIf="userService.connectedUser.id">
+      <a class="btn btn-success" routerLink="/profil-user">Profil</a>
+    </div>
+    <div class="col-2" style="color: white" *ngIf="userService.connectedUser.id">
+      <a class="btn btn-danger" (click)="disconnectUser()">Déconnexion</a>
     </div>
   </div>
 </div>

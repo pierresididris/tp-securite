@@ -8,10 +8,12 @@ import { UserService } from '../user.service';
   styleUrls: ['./profil-user.component.css']
 })
 export class ProfilUserComponent implements OnInit {
+  editMail: boolean;
 
   constructor(public userService: UserService) { }
 
   ngOnInit() {
+    this.editMail = false;
     this.userService.setConnectedUser().then((response) => {
       if(this.userService.connectedUser.profilId == 1){
         this.userService.connectedUser.profilLabel = 'employé'

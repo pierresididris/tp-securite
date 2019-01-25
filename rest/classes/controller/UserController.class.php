@@ -3,6 +3,7 @@
 namespace controller;
 
 use model\UserDao;
+use \Firebase\JWT\JWT;
 
 class Usercontroller{
     private $userDao;
@@ -24,7 +25,8 @@ class Usercontroller{
     public function connectUser($email, $pwd){
         $userId = $this->userDao->connectUser($email, $pwd);
         if($userId != "error"){
-            \setcookie('currentUser', $userId);
+            $jwt = JWT::encode($userId, 'tpsecuritepassphrase');
+            \setcookie('currentUser', $jwt);
             $this->userDao->openSession($userId);
         }
         return $userId;

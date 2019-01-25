@@ -12,6 +12,8 @@ export class FormConnectionComponent implements OnInit {
   user: User;
   invalidMail: boolean;
   noUser: boolean;
+  recuperationMail: string;
+  mailSent: boolean;
 
   constructor(
     private userService: UserService,
@@ -22,18 +24,19 @@ export class FormConnectionComponent implements OnInit {
     this.user = new User();
     this.invalidMail = false;
     this.noUser = false;
+    this.mailSent = false;
   }
 
   connect(): void {
     this.invalidMail = false;
     this.noUser = false;
+    this.mailSent = false;
     if(this.userService.checkMail(this.user.email)){
       this.userService.connectUser(this.user).subscribe((response) => {
-        if(response.userId != "error"){
+        if(response !== "error"){
           this.userService.connectedUser = this.user;
           this.userService.connectedUser.id = response;
-          console.log('formConnectionComponent -> connect', response);
-          this.router.navigate(['/home-user'])
+          this.router.navigate(['/home-user']);
         }else{
           this.noUser = true;
         }
@@ -41,6 +44,12 @@ export class FormConnectionComponent implements OnInit {
     }else{
       this.invalidMail = true;
     }
+  }
+
+  forgetPwd(): void {
+    this.userService.forgetPwd('test').subscribe((response) => {
+      this.mailSent = true;
+    });
   }
 
 }
